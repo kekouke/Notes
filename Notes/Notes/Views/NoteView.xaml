@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Notes.Views.NoteView">
+    <ContentPage.Content>
+        <StackLayout>
+            <Editor Text="{Binding Text}" 
+                HeightRequest="550"/>
+            <Button Text="Save"
+                    Command="{Binding ListViewModel.SaveNoteCommand}"
+                    CommandParameter="{Binding}"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
