@@ -1,4 +1,5 @@
 ﻿using Notes.Views;
+using Notes.Visual;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,18 +11,20 @@ namespace Notes.ViewModels
 {
     public class NotesListViewModel : BaseViewModel
     {
-        public ObservableCollection<NoteViewModel> LeftStack { get; set; }
-        public ObservableCollection<NoteViewModel> RightStack { get; set; }
+        public ObservableCollection<NoteViewModel> LeftStack { get; set; } = new ObservableCollection<NoteViewModel>();
+        public ObservableCollection<NoteViewModel> RightStack { get; set; } = new ObservableCollection<NoteViewModel>();
 
         private NoteViewModel _selectedNote;
         public ICommand AddNoteCommand { get; protected set; }
         public ICommand SaveNoteCommand { get; protected set; }
         public INavigation Navigation { get; set; }
 
+        public BindableStackLayout LHeight { get; set; }
+        public BindableStackLayout RHeight { get; set; }
+
         public NotesListViewModel()
         {
             LeftStack = new ObservableCollection<NoteViewModel>();
-            RightStack = new ObservableCollection<NoteViewModel>();
 
             AddNoteCommand = new Command(AddNote);
             SaveNoteCommand = new Command(SaveMote);
@@ -36,7 +39,7 @@ namespace Notes.ViewModels
 
             if (!note.isEdited)
             {
-                if (true)
+                if (LHeight.Height > RHeight.Height)
                 {
                     RightStack.Add(note);
                 } 
