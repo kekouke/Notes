@@ -5,24 +5,25 @@
              x:Class="Notes.Views.NotesListView">
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout Padding="10">
+            <Grid Padding="10">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <local:BindableStackLayout      x:Name = "l_stack"
+                    <local:BindableStackLayout  x:Name = "l_stack"
                                                 ItemsSource = "{Binding LeftStack}"
                                                 VerticalOptions="Start"
-                                                Grid.Column="0">
+                                                Grid.Column="0"
+                                                Height="{Binding LHeight, Mode=OneWayToSource}">
                         <local:BindableStackLayout.ItemTemplate >
                             <DataTemplate >
                                 <StackLayout Padding = "7" >
                                     <Frame Padding = "7" >
                                         <Label  Text = "{Binding Text}"
-                                            LineBreakMode = "WordWrap"
-                                            FontSize = "Medium"
-                                            TextColor = "Black" />
+                                                LineBreakMode = "WordWrap"
+                                                FontSize = "Medium"
+                                                TextColor = "Black" />
                                     </Frame >
                                 </StackLayout >
                             </DataTemplate >
@@ -30,17 +31,18 @@
                     </local:BindableStackLayout >
 
                     <local:BindableStackLayout  x:Name = "r_stack"
-                                            ItemsSource = "{Binding RightStack}"
-                                            VerticalOptions="Start"
-                                            Grid.Column="1">
+                                                ItemsSource = "{Binding RightStack}"
+                                                VerticalOptions="Start"
+                                                Grid.Column="1"
+                                                Height="{Binding RHeight, Mode=OneWayToSource}">
                         <local:BindableStackLayout.ItemTemplate>
                             <DataTemplate >
                                 <StackLayout Padding = "7" >
                                     <Frame Padding = "7" >
                                         <Label  Text = "{Binding Text}"
-                                            LineBreakMode = "WordWrap"
-                                            FontSize = "Medium"
-                                            TextColor = "Black" />
+                                                LineBreakMode = "WordWrap"
+                                                FontSize = "Medium"
+                                                TextColor = "Black" />
                                     </Frame >
                                 </StackLayout >
                             </DataTemplate >
@@ -48,17 +50,16 @@
 
                     </local:BindableStackLayout>
                 </Grid>
-                <!-- Place new controls here -->
-
+                
                 <Button Text="+" 
-                      WidthRequest="80"
-                      Command="{Binding AddNoteCommand}"
-                      HeightRequest="80"
-                      CornerRadius="40"
-                      HorizontalOptions="End"
-                      VerticalOptions="End" />
+                        WidthRequest="80"
+                        Command="{Binding AddNoteCommand}"
+                        HeightRequest="80"
+                        CornerRadius="40"
+                        HorizontalOptions="End"
+                        VerticalOptions="End" />
 
-            </StackLayout>
+            </Grid>
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>

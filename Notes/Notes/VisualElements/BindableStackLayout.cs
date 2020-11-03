@@ -6,7 +6,6 @@ namespace Notes.Visual
 {
     public class BindableStackLayout : StackLayout
     {
-
         public static readonly BindableProperty ItemsSourceProperty =
                      BindableProperty.Create(nameof(ItemsSource), typeof(IEnumerable), typeof(BindableStackLayout), default(IEnumerable), propertyChanged: OnItemsSourceChanged);
 
@@ -73,17 +72,6 @@ namespace Notes.Visual
         {
             get { return (DataTemplate)GetValue(ItemTemplateProperty); }
             set { SetValue(ItemTemplateProperty, value); }
-        }
-
-
-        public static readonly BindableProperty BindableHeightProperty =
-            BindableProperty.Create(nameof(BindableHeight), typeof(double), typeof(BindableStackLayout), default(DataTemplate));
-
-
-        public double BindableHeight
-        {
-            get => (double)GetValue(BindableHeightProperty);
-            set => SetValue(BindableHeightProperty, Height);
         }
 
         private void AddView(object item)

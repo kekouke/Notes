@@ -15,8 +15,8 @@ namespace Notes.Views
             ViewModel = new NotesListViewModel()
             {
                 Navigation = this.Navigation,
-                LHeight = l_stack,
-                RHeight = r_stack
+/*                LHeight = l_stack,
+                RHeight = r_stack*/
             };
 
             BindingContext = ViewModel;

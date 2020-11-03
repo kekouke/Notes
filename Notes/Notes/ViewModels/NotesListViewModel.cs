@@ -19,17 +19,13 @@ namespace Notes.ViewModels
         public ICommand SaveNoteCommand { get; protected set; }
         public INavigation Navigation { get; set; }
 
-        public BindableStackLayout LHeight { get; set; }
-        public BindableStackLayout RHeight { get; set; }
+        public double LHeight { get; set; } = 0;
+        public double RHeight { get; set; } = 0;
 
         public NotesListViewModel()
         {
-            LeftStack = new ObservableCollection<NoteViewModel>();
-
             AddNoteCommand = new Command(AddNote);
             SaveNoteCommand = new Command(SaveMote);
-
-
         }
 
         // Очень сомнительная идея с флажком
@@ -39,7 +35,7 @@ namespace Notes.ViewModels
 
             if (!note.isEdited)
             {
-                if (LHeight.Height > RHeight.Height)
+                if (LHeight > RHeight)
                 {
                     RightStack.Add(note);
                 } 
