@@ -1,6 +1,7 @@
 ﻿using Xamarin.Forms;
 using System.Collections;
 using System.Collections.Specialized;
+using System;
 
 namespace Notes.Visual
 {
@@ -70,8 +71,8 @@ namespace Notes.Visual
 
         public DataTemplate ItemTemplate
         {
-            get { return (DataTemplate)GetValue(ItemTemplateProperty); }
-            set { SetValue(ItemTemplateProperty, value); }
+            get => (DataTemplate)GetValue(ItemTemplateProperty);
+            set => SetValue(ItemTemplateProperty, value);
         }
 
         private void AddView(object item)

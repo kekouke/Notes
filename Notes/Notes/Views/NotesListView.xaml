@@ -23,7 +23,12 @@
                                         <Label  Text = "{Binding Text}"
                                                 LineBreakMode = "WordWrap"
                                                 FontSize = "Medium"
-                                                TextColor = "Black" />
+                                                TextColor = "Black">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding ListViewModel.TapCommand}"
+                                                                      CommandParameter="{Binding}"/>
+                                            </Label.GestureRecognizers>
+                                        </Label>
                                     </Frame >
                                 </StackLayout >
                             </DataTemplate >
@@ -42,7 +47,12 @@
                                         <Label  Text = "{Binding Text}"
                                                 LineBreakMode = "WordWrap"
                                                 FontSize = "Medium"
-                                                TextColor = "Black" />
+                                                TextColor = "Black">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding ListViewModel.TapCommand}"
+                                                                      CommandParameter="{Binding}"/>
+                                            </Label.GestureRecognizers>
+                                        </Label>
                                     </Frame >
                                 </StackLayout >
                             </DataTemplate >

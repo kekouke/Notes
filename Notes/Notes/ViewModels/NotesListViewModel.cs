@@ -17,6 +17,7 @@ namespace Notes.ViewModels
         private NoteViewModel _selectedNote;
         public ICommand AddNoteCommand { get; protected set; }
         public ICommand SaveNoteCommand { get; protected set; }
+        public ICommand TapCommand { get; protected set; }
         public INavigation Navigation { get; set; }
 
         public double LHeight { get; set; } = 0;
@@ -26,6 +27,12 @@ namespace Notes.ViewModels
         {
             AddNoteCommand = new Command(AddNote);
             SaveNoteCommand = new Command(SaveMote);
+            TapCommand = new Command(Tap);
+        }
+
+        private void Tap(object obj)
+        {
+            SelectedNote = obj as NoteViewModel;
         }
 
         // Очень сомнительная идея с флажком
