@@ -18,6 +18,8 @@ namespace Notes.ViewModels
         public ICommand AddNoteCommand { get; protected set; }
         public ICommand SaveNoteCommand { get; protected set; }
         public ICommand TapCommand { get; protected set; }
+        public ICommand DeleteNoteCommand { get; protected set; }
+
         public INavigation Navigation { get; set; }
 
         public double LHeight { get; set; } = 0;
@@ -27,7 +29,22 @@ namespace Notes.ViewModels
         {
             AddNoteCommand = new Command(AddNote);
             SaveNoteCommand = new Command(SaveMote);
-            TapCommand = new Command(Tap);
+            DeleteNoteCommand = new Command(DeleteNote);
+            TapCommand = new Command(Tap); // TODO
+        }
+
+        // TODO
+        private void DeleteNote(object obj)
+        {
+            var note = obj as NoteViewModel;
+            if (LeftStack.Contains(note))
+            {
+                LeftStack.Remove(note);
+            }
+            else if (RightStack.Contains(note))
+            {
+                RightStack.Remove(note);
+            }
         }
 
         private void Tap(object obj)

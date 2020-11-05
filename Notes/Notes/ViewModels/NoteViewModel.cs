@@ -1,4 +1,5 @@
 ﻿using Notes.Models;
+using System;
 
 namespace Notes.ViewModels
 {
@@ -10,7 +11,7 @@ namespace Notes.ViewModels
 
         public NoteViewModel()
         {
-            _note = new Note();
+            _note = new Note() { Date = DateTime.Now };
             isEdited = false;
         }
 
@@ -22,6 +23,19 @@ namespace Notes.ViewModels
                 if (_note.Text != value)
                 {
                     _note.Text = value;
+                    OnPropertyChange();
+                }
+            }
+        }
+
+        public DateTime Date
+        {
+            get => _note.Date;
+            set
+            {
+                if (_note.Date != Date)
+                {
+                    _note.Date = value;
                     OnPropertyChange();
                 }
             }

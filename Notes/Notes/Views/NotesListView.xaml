@@ -17,9 +17,12 @@
                                                 Grid.Column="0"
                                                 Height="{Binding LHeight, Mode=OneWayToSource}">
                         <local:BindableStackLayout.ItemTemplate >
-                            <DataTemplate >
-                                <StackLayout Padding = "7" >
-                                    <Frame Padding = "7" >
+                            <DataTemplate>
+                                <Frame Padding = "7">
+                                    <Frame.GestureRecognizers>
+                                        <PanGestureRecognizer PanUpdated="PanGestureRecognizer_PanUpdated"/>
+                                    </Frame.GestureRecognizers>
+                                    <StackLayout Padding = "10" BackgroundColor="Red">
                                         <Label  Text = "{Binding Text}"
                                                 LineBreakMode = "WordWrap"
                                                 FontSize = "Medium"
@@ -29,8 +32,9 @@
                                                                       CommandParameter="{Binding}"/>
                                             </Label.GestureRecognizers>
                                         </Label>
-                                    </Frame >
-                                </StackLayout >
+                                        <Label Text="2002.01.12 15:12" TextColor="Gray"/>
+                                    </StackLayout>
+                                </Frame>
                             </DataTemplate >
                         </local:BindableStackLayout.ItemTemplate >
                     </local:BindableStackLayout >
@@ -41,11 +45,14 @@
                                                 Grid.Column="1"
                                                 Height="{Binding RHeight, Mode=OneWayToSource}">
                         <local:BindableStackLayout.ItemTemplate>
-                            <DataTemplate >
-                                <StackLayout Padding = "7" >
-                                    <Frame Padding = "7" >
+                            <DataTemplate>
+                                <Frame Padding = "7">
+                                    <Frame.GestureRecognizers>
+                                        <PanGestureRecognizer PanUpdated="PanGestureRecognizer_PanUpdated"/>
+                                    </Frame.GestureRecognizers>
+                                    <StackLayout Padding = "10" BackgroundColor="Red">
                                         <Label  Text = "{Binding Text}"
-                                                LineBreakMode = "WordWrap"
+                                                LineBreakMode ="WordWrap"
                                                 FontSize = "Medium"
                                                 TextColor = "Black">
                                             <Label.GestureRecognizers>
@@ -53,8 +60,9 @@
                                                                       CommandParameter="{Binding}"/>
                                             </Label.GestureRecognizers>
                                         </Label>
-                                    </Frame >
-                                </StackLayout >
+                                        <Label Text="2002.01.12 15:12" TextColor="Gray"/>
+                                    </StackLayout >
+                                </Frame >
                             </DataTemplate >
                         </local:BindableStackLayout.ItemTemplate>
 
