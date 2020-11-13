@@ -11,7 +11,7 @@ namespace Notes.ViewModels
 
         public NoteViewModel()
         {
-            _note = new Note() { Date = DateTime.Now };
+            _note = new Note() { Date = DateTime.Now.ToString("g") };
             isEdited = false;
         }
 
@@ -23,19 +23,41 @@ namespace Notes.ViewModels
                 if (_note.Text != value)
                 {
                     _note.Text = value;
+                    ChangeLastEditDate();
+                    UpdateSymbolsCount();
                     OnPropertyChange();
                 }
             }
         }
 
-        public DateTime Date
+        private void UpdateSymbolsCount()
+        {
+            Count = Text.Length;
+        }
+
+        private void ChangeLastEditDate() => Date = DateTime.Now.ToString("g");
+
+        public string Date
         {
             get => _note.Date;
             set
             {
-                if (_note.Date != Date)
+                if (_note.Date != value)
                 {
                     _note.Date = value;
+                    OnPropertyChange();
+                }
+            }
+        }
+
+        public int Count //TODO: Rename
+        {
+            get => _note.Count;
+            set
+            {
+                if (_note.Count != value)
+                {
+                    _note.Count = value;
                     OnPropertyChange();
                 }
             }

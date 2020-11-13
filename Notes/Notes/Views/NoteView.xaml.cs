@@ -21,5 +21,11 @@ namespace Notes.Views
             ViewModel = vm;
             BindingContext = ViewModel;
         }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            ViewModel.ListViewModel.SaveNoteCommand.Execute(ViewModel);
+        }
     }
 }

@@ -18,23 +18,22 @@
                                                 Height="{Binding LHeight, Mode=OneWayToSource}">
                         <local:BindableStackLayout.ItemTemplate >
                             <DataTemplate>
-                                <Frame Padding = "7">
-                                    <Frame.GestureRecognizers>
-                                        <PanGestureRecognizer PanUpdated="PanGestureRecognizer_PanUpdated"/>
-                                    </Frame.GestureRecognizers>
-                                    <StackLayout Padding = "10" BackgroundColor="Red">
-                                        <Label  Text = "{Binding Text}"
-                                                LineBreakMode = "WordWrap"
+                                <local:GestureScrollView SwipeLeft="GestureScrollView_SwipeLeft">
+                                    <Frame Padding = "7">
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding ListViewModel.TapCommand}"
+                                                              CommandParameter="{Binding}"/>
+                                        </Frame.GestureRecognizers>
+                                        <StackLayout Padding = "10" BackgroundColor="Red">
+                                            <Label  Text = "{Binding Text}"
+                                                LineBreakMode = "TailTruncation"
                                                 FontSize = "Medium"
                                                 TextColor = "Black">
-                                            <Label.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding ListViewModel.TapCommand}"
-                                                                      CommandParameter="{Binding}"/>
-                                            </Label.GestureRecognizers>
-                                        </Label>
-                                        <Label Text="2002.01.12 15:12" TextColor="Gray"/>
-                                    </StackLayout>
-                                </Frame>
+                                            </Label>
+                                            <Label Text="{Binding Date}" TextColor="Gray"/>
+                                        </StackLayout>
+                                    </Frame>
+                                </local:GestureScrollView>
                             </DataTemplate >
                         </local:BindableStackLayout.ItemTemplate >
                     </local:BindableStackLayout >
@@ -46,29 +45,27 @@
                                                 Height="{Binding RHeight, Mode=OneWayToSource}">
                         <local:BindableStackLayout.ItemTemplate>
                             <DataTemplate>
-                                <Frame Padding = "7">
-                                    <Frame.GestureRecognizers>
-                                        <PanGestureRecognizer PanUpdated="PanGestureRecognizer_PanUpdated"/>
-                                    </Frame.GestureRecognizers>
-                                    <StackLayout Padding = "10" BackgroundColor="Red">
-                                        <Label  Text = "{Binding Text}"
-                                                LineBreakMode ="WordWrap"
-                                                FontSize = "Medium"
-                                                TextColor = "Black">
-                                            <Label.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding ListViewModel.TapCommand}"
-                                                                      CommandParameter="{Binding}"/>
-                                            </Label.GestureRecognizers>
-                                        </Label>
-                                        <Label Text="2002.01.12 15:12" TextColor="Gray"/>
-                                    </StackLayout >
-                                </Frame >
+                                <local:GestureScrollView SwipeRight="GestureScrollView_SwipeRight">
+                                    <Frame Padding = "7">
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer   Command="{Binding ListViewModel.TapCommand}"
+                                                                CommandParameter="{Binding}"/>
+                                        </Frame.GestureRecognizers>
+                                        <StackLayout Padding = "10" BackgroundColor="Red">
+                                            <Label  Text = "{Binding Text}"
+                                                    LineBreakMode ="TailTruncation"
+                                                    FontSize = "Medium"
+                                                    TextColor = "Black">
+                                            </Label>
+                                            <Label Text="{Binding Date}" TextColor="Gray"/>
+                                        </StackLayout >
+                                    </Frame >
+                                </local:GestureScrollView>
                             </DataTemplate >
                         </local:BindableStackLayout.ItemTemplate>
 
                     </local:BindableStackLayout>
                 </Grid>
-                
                 <Button Text="+" 
                         WidthRequest="80"
                         Command="{Binding AddNoteCommand}"
@@ -76,8 +73,8 @@
                         CornerRadius="40"
                         HorizontalOptions="End"
                         VerticalOptions="End" />
-
             </Grid>
         </ScrollView>
+
     </ContentPage.Content>
 </ContentPage>

@@ -4,6 +4,15 @@
              x:Class="Notes.Views.NoteView">
     <ContentPage.Content>
         <StackLayout>
+            <Frame>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="{Binding Date}"/>
+                    <Label Text=" | "/>
+                    <Label Text="{Binding Count}"/>
+                    <Label Text=" символов"/>
+                </StackLayout>
+            </Frame>
+
             <Editor Text="{Binding Text}" 
                 HeightRequest="550"/>
             <Button Text="Save"

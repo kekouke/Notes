@@ -1,9 +1,6 @@
 ﻿using Notes.Views;
-using Notes.Visual;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
+using System.Linq;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -11,8 +8,8 @@ namespace Notes.ViewModels
 {
     public class NotesListViewModel : BaseViewModel
     {
-        public ObservableCollection<NoteViewModel> LeftStack { get; set; } = new ObservableCollection<NoteViewModel>();
-        public ObservableCollection<NoteViewModel> RightStack { get; set; } = new ObservableCollection<NoteViewModel>();
+        public ObservableCollection<NoteViewModel> LeftStack { get; set; } 
+        public ObservableCollection<NoteViewModel> RightStack { get; set; }
 
         private NoteViewModel _selectedNote;
         public ICommand AddNoteCommand { get; protected set; }
@@ -30,26 +27,30 @@ namespace Notes.ViewModels
             AddNoteCommand = new Command(AddNote);
             SaveNoteCommand = new Command(SaveMote);
             DeleteNoteCommand = new Command(DeleteNote);
-            TapCommand = new Command(Tap); // TODO
+            TapCommand = new Command((object obj) => { SelectedNote = obj as NoteViewModel; });
+
+            LeftStack = new ObservableCollection<NoteViewModel>();
+            RightStack = new ObservableCollection<NoteViewModel>();
         }
 
         // TODO
-        private void DeleteNote(object obj)
+        private async void DeleteNote(object obj)
         {
             var note = obj as NoteViewModel;
-            if (LeftStack.Contains(note))
-            {
-                LeftStack.Remove(note);
-            }
-            else if (RightStack.Contains(note))
-            {
-                RightStack.Remove(note);
-            }
-        }
 
-        private void Tap(object obj)
-        {
-            SelectedNote = obj as NoteViewModel;
+            if (await Application.Current.MainPage.DisplayAlert("Delete the note", "Do you wanna delete the note?", "Yes", "No"))
+            {
+                if (LeftStack.Contains(note))
+                {
+                    LeftStack.Remove(note);
+                }
+                else if (RightStack.Contains(note))
+                {
+                    RightStack.Remove(note);
+                }
+
+                CorrectHeightColumn();
+            }
         }
 
         // Очень сомнительная идея с флажком
@@ -80,6 +81,14 @@ namespace Notes.ViewModels
         private void Back()
         {
             Navigation.PopAsync();
+        }
+
+        private void CorrectHeightColumn()
+        {
+/*            while (LHeight < RHeight && RHeight > 1)
+            {
+
+            }*/
         }
 
         public NoteViewModel SelectedNote 
