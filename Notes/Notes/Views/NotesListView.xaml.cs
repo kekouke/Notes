@@ -18,12 +18,14 @@ namespace Notes.Views
 
         private void GestureScrollView_SwipeLeft(object sender, System.EventArgs e)
         {
-            DisplayAlert("Gesture Info", "Swipe Left Detected", "OK");
+            var noteFrame = (sender as ScrollView);
+            ViewModel.DeleteNoteCommand.Execute(noteFrame.BindingContext);
         }
 
         private void GestureScrollView_SwipeRight(object sender, System.EventArgs e)
         {
-            DisplayAlert("Gesture Info", "Swipe Right Detected", "OK");
+            var noteFrame = (sender as ScrollView);
+            ViewModel.DeleteNoteCommand.Execute(noteFrame.BindingContext);
         }
 
         /*private async void PanGestureRecognizer_PanUpdated(object panSender, PanUpdatedEventArgs panArgs)

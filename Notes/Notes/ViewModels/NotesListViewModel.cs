@@ -85,10 +85,16 @@ namespace Notes.ViewModels
 
         private void CorrectHeightColumn()
         {
-/*            while (LHeight < RHeight && RHeight > 1)
+            if (RightStack.Count > LeftStack.Count)
             {
-
-            }*/
+                LeftStack.Add(RightStack.Last());
+                RightStack.RemoveAt(RightStack.Count - 1);
+            }
+            if (LeftStack.Count - RightStack.Count > 1)
+            {
+                RightStack.Add(LeftStack.Last());
+                LeftStack.RemoveAt(LeftStack.Count - 1);
+            }
         }
 
         public NoteViewModel SelectedNote 
