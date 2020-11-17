@@ -8,7 +8,7 @@
                 <StackLayout Orientation="Horizontal">
                     <Label Text="{Binding Date}"/>
                     <Label Text=" | "/>
-                    <Label Text="{Binding Count}"/>
+                    <Label Text="{Binding Lenght}"/>
                     <Label Text=" символов"/>
                 </StackLayout>
             </Frame>

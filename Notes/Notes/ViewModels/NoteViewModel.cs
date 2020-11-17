@@ -6,13 +6,13 @@ namespace Notes.ViewModels
     public class NoteViewModel : BaseViewModel
     {
         private Note _note;
-        public bool isEdited;
         private NotesListViewModel lvm;
+
+        private bool _isNew;
 
         public NoteViewModel()
         {
-            _note = new Note() { ChangeTime = DateTime.Now };
-            isEdited = false;
+            _note = new Note(DateTime.Now);
         }
 
         public string Text
@@ -32,22 +32,29 @@ namespace Notes.ViewModels
 
         public double Height { get; set; }
 
-        public bool CheckCorrectData() => Text != null && Text.Trim() != String.Empty && !isEdited;
+        public bool CheckCorrectData() => Text != null && Text.Trim() != String.Empty;
 
-        private void ChangeLastEditDate() => Date = DateTime.Now.ToString("g");
+        private void ChangeLastEditDate()
+        {
+            _note.LastChangeTime = DateTime.Now;
+            Date = _note.LastChangeTime.ToString("g");
+        }
 
-        private void UpdateSymbolsCount() => Count = Text.Length;
+        public bool CompareDateTime() => _note.LastChangeTime != _note.OldChangeTime;
+
+        private void UpdateSymbolsCount() => Lenght = Text.Length;
+
+        public void Update() => _note.OldChangeTime = _note.LastChangeTime;
 
         public string Date
         {
-            get => _note.ChangeTime.ToString("g");
+            get => _note.LastChangeTime.ToString("g");
             set
             {
                 var new_date = DateTime.Parse(value);
-                if (_note.ChangeTime != new_date)
+                if (_note.LastChangeTime != new_date)
                 {
                     DateDate = new_date;
-                    _note.ChangeTime = new_date;
                     OnPropertyChange();
                 }
             }
@@ -55,14 +62,15 @@ namespace Notes.ViewModels
 
         public DateTime DateDate { get; set; } // TODO
 
-        public int Count //TODO: Rename
+        // Убрать привязку к свойству и добавить все в xaml
+        public int Lenght
         {
-            get => _note.Count;
+            get => _note.Lenght;
             set
             {
-                if (_note.Count != value)
+                if (_note.Lenght != value)
                 {
-                    _note.Count = value;
+                    _note.Lenght = value;
                     OnPropertyChange();
                 }
             }

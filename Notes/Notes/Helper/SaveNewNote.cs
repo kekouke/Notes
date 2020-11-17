@@ -1,14 +1,17 @@
-﻿using System;
+﻿using Notes.ViewModels;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace Notes.Helper
 {
     public class SaveNewNote : ISaveable
     {
-        public void Save()
+        public void Save(object obj, LinkedList<NoteViewModel> notes)
         {
-            throw new NotImplementedException();
+            notes.AddFirst(obj as NoteViewModel);
+            (obj as NoteViewModel).Update();
         }
     }
 }

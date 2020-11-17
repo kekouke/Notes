@@ -34,11 +34,9 @@ namespace Notes.ViewModels
         {
             AddNoteCommand = new Command(AddNote);
 
-            SaveNoteCommand = new Command(SaveMote);
+            SaveNoteCommand = new Command(SaveNote);
             DeleteNoteCommand = new Command(DeleteNote);
             TapCommand = new Command((object obj) => { SelectedNote = obj as NoteViewModel; });
-
-            _saver = new SaveNewNote();
 
             LeftStack = new ObservableCollection<NoteViewModel>();
             RightStack = new ObservableCollection<NoteViewModel>();
@@ -57,38 +55,31 @@ namespace Notes.ViewModels
             }
         }
 
+
         private void Invalidate()
         {
             RHeight = 0;
             LHeight = 0;
-            ClearList(LeftStack);
-            ClearList(RightStack);
+            LeftStack.Clear();
+            RightStack.Clear();
             CorrectHeightColumn();
         }
 
-        private void SaveMote(object obj)
+        private void SaveNote(object obj)
         {
-            var note = obj as NoteViewModel;
-            if (note.CheckCorrectData())
-            {
-                Notes.AddFirst(note);
-                Invalidate();
-            }
-
+            _saver.Save(obj, Notes);
+            Invalidate();
             Back();
         }
 
-        private void ClearList(ObservableCollection<NoteViewModel> list)
+        private void SetSaveStrategy(ISaveable saveStrategy)
         {
-            int count = list.Count;
-            for (int i = 0; i < count; i++)
-            {
-                list.RemoveAt(0);
-            }
+            _saver = saveStrategy;
         }
 
         private void AddNote()
         {
+            SetSaveStrategy(new SaveNewNote());
             Navigation.PushAsync(new NoteView(new NoteViewModel() { ListViewModel = this }));
         }
 
@@ -125,8 +116,9 @@ namespace Notes.ViewModels
                     _selectedNote = null;
                     OnPropertyChange();
                     temp = value;
-                    temp.isEdited = true;
-                    Navigation.PushAsync(new NoteView(temp));
+                    SetSaveStrategy(new EditOldNote());
+/*                    temp.isEdited = true;
+*/                    Navigation.PushAsync(new NoteView(temp));
                 }
             } 
         }

@@ -25,7 +25,14 @@ namespace Notes.Visual
 
         private void ItemsSourceCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            var invalidate = false;
+            bool invalidate = false;
+
+            // if the collection has been cleaned up by Clear() method
+            if (e.NewItems == null && e.OldItems == null)
+            {
+                Children.Clear();
+                invalidate = true;
+            }
 
             if (e.OldItems != null)
             {

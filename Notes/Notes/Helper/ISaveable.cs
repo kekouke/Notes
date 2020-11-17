@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Notes.ViewModels;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Notes.Helper
 {
     interface ISaveable
     {
-        void Save();
+        void Save(object obj, LinkedList<NoteViewModel> notes);
     }
 }
