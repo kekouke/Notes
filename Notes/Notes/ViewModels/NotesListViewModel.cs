@@ -1,6 +1,9 @@
-﻿using Notes.Views;
+﻿using Notes.Helper;
+using Notes.Views;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -11,7 +14,12 @@ namespace Notes.ViewModels
         public ObservableCollection<NoteViewModel> LeftStack { get; set; } 
         public ObservableCollection<NoteViewModel> RightStack { get; set; }
 
+        private LinkedList<NoteViewModel> Notes { get; set; }
+
         private NoteViewModel _selectedNote;
+
+        private ISaveable _saver;
+
         public ICommand AddNoteCommand { get; protected set; }
         public ICommand SaveNoteCommand { get; protected set; }
         public ICommand TapCommand { get; protected set; }
@@ -25,12 +33,16 @@ namespace Notes.ViewModels
         public NotesListViewModel()
         {
             AddNoteCommand = new Command(AddNote);
+
             SaveNoteCommand = new Command(SaveMote);
             DeleteNoteCommand = new Command(DeleteNote);
             TapCommand = new Command((object obj) => { SelectedNote = obj as NoteViewModel; });
 
+            _saver = new SaveNewNote();
+
             LeftStack = new ObservableCollection<NoteViewModel>();
             RightStack = new ObservableCollection<NoteViewModel>();
+            Notes = new LinkedList<NoteViewModel>();
         }
 
         // TODO
@@ -40,37 +52,39 @@ namespace Notes.ViewModels
 
             if (await Application.Current.MainPage.DisplayAlert("Delete the note", "Do you wanna delete the note?", "Yes", "No"))
             {
-                if (LeftStack.Contains(note))
-                {
-                    LeftStack.Remove(note);
-                }
-                else if (RightStack.Contains(note))
-                {
-                    RightStack.Remove(note);
-                }
-
-                CorrectHeightColumn();
+                Notes.Remove(Notes.Find(note));
+                Invalidate();
             }
         }
 
-        // Очень сомнительная идея с флажком
-        private void SaveMote(object obj) // Вот тут должен быть алгоритм фильтрации 
+        private void Invalidate()
+        {
+            RHeight = 0;
+            LHeight = 0;
+            ClearList(LeftStack);
+            ClearList(RightStack);
+            CorrectHeightColumn();
+        }
+
+        private void SaveMote(object obj)
         {
             var note = obj as NoteViewModel;
-
-            if (!note.isEdited)
+            if (note.CheckCorrectData())
             {
-                if (LHeight > RHeight)
-                {
-                    RightStack.Add(note);
-                } 
-                else
-                {
-                    LeftStack.Add(note);
-                }
+                Notes.AddFirst(note);
+                Invalidate();
             }
 
             Back();
+        }
+
+        private void ClearList(ObservableCollection<NoteViewModel> list)
+        {
+            int count = list.Count;
+            for (int i = 0; i < count; i++)
+            {
+                list.RemoveAt(0);
+            }
         }
 
         private void AddNote()
@@ -85,15 +99,18 @@ namespace Notes.ViewModels
 
         private void CorrectHeightColumn()
         {
-            if (RightStack.Count > LeftStack.Count)
+            foreach (var note in Notes.OrderByDescending(x => x.DateDate)) //TODO
             {
-                LeftStack.Add(RightStack.Last());
-                RightStack.RemoveAt(RightStack.Count - 1);
-            }
-            if (LeftStack.Count - RightStack.Count > 1)
-            {
-                RightStack.Add(LeftStack.Last());
-                LeftStack.RemoveAt(LeftStack.Count - 1);
+                if (LHeight > RHeight)
+                {
+                    RightStack.Add(note);
+                    RHeight += note.Height + 6;
+                }
+                else
+                {
+                    LeftStack.Add(note);
+                    LHeight += note.Height + 6;
+                }
             }
         }
 

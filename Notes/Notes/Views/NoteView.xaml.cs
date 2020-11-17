@@ -1,11 +1,4 @@
 ﻿using Notes.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -22,10 +15,6 @@ namespace Notes.Views
             BindingContext = ViewModel;
         }
 
-        protected override void OnDisappearing()
-        {
-            base.OnDisappearing();
-            ViewModel.ListViewModel.SaveNoteCommand.Execute(ViewModel);
-        }
+        protected override void OnDisappearing() => ViewModel.ListViewModel.SaveNoteCommand.Execute(ViewModel);
     }
 }

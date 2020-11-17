@@ -2,10 +2,11 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:Notes.Visual"
-             x:Class="Notes.Views.NotesListView">
+             x:Class="Notes.Views.NotesListView"
+             Title="Notes">
     <ContentPage.Content>
-        <ScrollView>
-            <Grid Padding="10">
+        <StackLayout>
+            <ScrollView Padding="10">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -19,14 +20,16 @@
                         <local:BindableStackLayout.ItemTemplate >
                             <DataTemplate>
                                 <local:GestureScrollView SwipeLeft="GestureScrollView_SwipeLeft">
-                                    <Frame Padding = "7">
+                                    <Frame Padding = "7"
+                                           Height = "{Binding Height, Mode=OneWayToSource}">
                                         <Frame.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding ListViewModel.TapCommand}"
-                                                              CommandParameter="{Binding}"/>
+                                            <TapGestureRecognizer   Command="{Binding ListViewModel.TapCommand}"
+                                                                    CommandParameter="{Binding}"/>
                                         </Frame.GestureRecognizers>
-                                        <StackLayout Padding = "10" BackgroundColor="Red">
+                                        <StackLayout Padding = "10" BackgroundColor="#EEDEA6">
                                             <Label  Text = "{Binding Text}"
-                                                LineBreakMode = "TailTruncation"
+                                                    LineBreakMode = "TailTruncation"
+                                                    MaxLines="5"
                                                 FontSize = "Medium"
                                                 TextColor = "Black">
                                             </Label>
@@ -46,14 +49,16 @@
                         <local:BindableStackLayout.ItemTemplate>
                             <DataTemplate>
                                 <local:GestureScrollView SwipeRight="GestureScrollView_SwipeRight">
-                                    <Frame Padding = "7">
+                                    <Frame Padding = "7"
+                                           Height = "{Binding Height, Mode=OneWayToSource}">
                                         <Frame.GestureRecognizers>
                                             <TapGestureRecognizer   Command="{Binding ListViewModel.TapCommand}"
                                                                 CommandParameter="{Binding}"/>
                                         </Frame.GestureRecognizers>
-                                        <StackLayout Padding = "10" BackgroundColor="Red">
+                                        <StackLayout Padding = "10"  BackgroundColor="#EEDEA6">
                                             <Label  Text = "{Binding Text}"
                                                     LineBreakMode ="TailTruncation"
+                                                    MaxLines="5"
                                                     FontSize = "Medium"
                                                     TextColor = "Black">
                                             </Label>
@@ -63,9 +68,11 @@
                                 </local:GestureScrollView>
                             </DataTemplate >
                         </local:BindableStackLayout.ItemTemplate>
-
                     </local:BindableStackLayout>
                 </Grid>
+            </ScrollView>
+            <StackLayout VerticalOptions="EndAndExpand"
+                         Margin="10">
                 <Button Text="+" 
                         WidthRequest="80"
                         Command="{Binding AddNoteCommand}"
@@ -73,8 +80,7 @@
                         CornerRadius="40"
                         HorizontalOptions="End"
                         VerticalOptions="End" />
-            </Grid>
-        </ScrollView>
-
+            </StackLayout>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

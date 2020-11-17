@@ -1,7 +1,6 @@
 ﻿using Xamarin.Forms;
 using System.Collections;
 using System.Collections.Specialized;
-using System;
 
 namespace Notes.Visual
 {
@@ -54,6 +53,7 @@ namespace Notes.Visual
                 this.UpdateChildrenLayout();
                 this.InvalidateLayout();
             }
+            
         }
         private View CreateChildViewFor(object item)
         {

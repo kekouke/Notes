@@ -7,7 +7,8 @@ namespace Notes.Models
     public class Note
     {
         public string Text { get; set; }
-        public string Date { get; set; }
+        public DateTime CreateTime { get; }
+        public DateTime ChangeTime { get; set; }
         public int Count { get; set; } //Rename
     }
 }
