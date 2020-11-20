@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Newtonsoft.Json;
+using Notes.ViewModels;
 
 namespace Notes.Helper
 {
@@ -13,15 +14,23 @@ namespace Notes.Helper
 
         public static NoteSaver Instance { get => _instance.Value; }
 
-        private NoteSaver() {}
+        private NoteSaver() { }
 
-        public void ReadData()
+        public object ReadData()
         {
-            using (var sr = new StreamReader(@"notes.json"))
+            using (var file = new StreamReader(new FileStream("notes.txt", FileMode.OpenOrCreate)))
             {
-                JsonConvert.DeserializeObject<object>(sr.ReadToEnd());
+                return JsonConvert.DeserializeObject<object>(file.ReadToEnd()); 
             }
 
+        }
+
+        public void SaveData(LinkedList<NoteViewModel> notes)
+        {
+            using (var sw = new StreamWriter(new FileStream("notes.txt", FileMode.OpenOrCreate)))
+            {
+                sw.Write(JsonConvert.SerializeObject(notes));
+            }
         }
     }
 }

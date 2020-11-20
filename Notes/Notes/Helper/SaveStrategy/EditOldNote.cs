@@ -11,8 +11,12 @@ namespace Notes.Helper
             if (new_note.CompareDateTime())
             {
                 notes.Remove(notes.Find(new_note));
-                notes.AddFirst(new_note);
-                new_note.Update();
+                if (new_note.CheckCorrectData())
+                {
+                    notes.AddFirst(new_note);
+                    new_note.UpdateTime();
+                }
+
             }
         }
     }

@@ -8,8 +8,6 @@ namespace Notes.ViewModels
         private Note _note;
         private NotesListViewModel lvm;
 
-        private bool _isNew;
-
         public NoteViewModel()
         {
             _note = new Note(DateTime.Now);
@@ -30,39 +28,19 @@ namespace Notes.ViewModels
             }
         }
 
-        public double Height { get; set; }
-
-        public bool CheckCorrectData() => Text != null && Text.Trim() != String.Empty;
-
-        private void ChangeLastEditDate()
+        public DateTime Date
         {
-            _note.LastChangeTime = DateTime.Now;
-            Date = _note.LastChangeTime.ToString("g");
-        }
-
-        public bool CompareDateTime() => _note.LastChangeTime != _note.OldChangeTime;
-
-        private void UpdateSymbolsCount() => Lenght = Text.Length;
-
-        public void Update() => _note.OldChangeTime = _note.LastChangeTime;
-
-        public string Date
-        {
-            get => _note.LastChangeTime.ToString("g");
+            get => _note.LastChangeTime;
             set
             {
-                var new_date = DateTime.Parse(value);
-                if (_note.LastChangeTime != new_date)
+                if (_note.LastChangeTime != value)
                 {
-                    DateDate = new_date;
+                    _note.LastChangeTime = value;
                     OnPropertyChange();
                 }
             }
         }
 
-        public DateTime DateDate { get; set; } // TODO
-
-        // Убрать привязку к свойству и добавить все в xaml
         public int Lenght
         {
             get => _note.Lenght;
@@ -79,14 +57,19 @@ namespace Notes.ViewModels
         public NotesListViewModel ListViewModel
         {
             get => lvm;
-            set
-            {
-                if (lvm != value)
-                {
-                    lvm = value;
-                    OnPropertyChange();
-                }
-            }
+            set => lvm = value;
         }
+
+        public double Height { get; set; }
+
+        public bool CheckCorrectData() => Text != null && Text.Trim() != String.Empty;
+
+        public void UpdateTime() => _note.OldChangeTime = _note.LastChangeTime;
+
+        private void ChangeLastEditDate() => Date = DateTime.Now;
+
+        public bool CompareDateTime() => _note.LastChangeTime != _note.OldChangeTime;
+
+        private void UpdateSymbolsCount() => Lenght = Text.Length;
     }
 }

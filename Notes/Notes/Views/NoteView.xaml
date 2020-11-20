@@ -6,7 +6,7 @@
         <StackLayout>
             <Frame>
                 <StackLayout Orientation="Horizontal">
-                    <Label Text="{Binding Date}"/>
+                    <Label Text="{Binding Date, StringFormat='{0:d/M/yyyy HH:mm}'}"/>
                     <Label Text=" | "/>
                     <Label Text="{Binding Lenght}"/>
                     <Label Text=" символов"/>

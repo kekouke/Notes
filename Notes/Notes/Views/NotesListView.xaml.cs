@@ -12,7 +12,7 @@ namespace Notes.Views
         public NotesListView()
         {
             InitializeComponent();
-            ViewModel = new NotesListViewModel() { Navigation = this.Navigation };
+            ViewModel = new NotesListViewModel() { Navigation = this.Navigation, Spacing = l_stack.Spacing };
             BindingContext = ViewModel;
         }
 

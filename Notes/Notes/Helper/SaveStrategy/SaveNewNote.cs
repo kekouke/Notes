@@ -10,8 +10,11 @@ namespace Notes.Helper
     {
         public void Save(object obj, LinkedList<NoteViewModel> notes)
         {
-            notes.AddFirst(obj as NoteViewModel);
-            (obj as NoteViewModel).Update();
+            if ((obj as NoteViewModel).CheckCorrectData())
+            {
+                notes.AddFirst(obj as NoteViewModel);
+                (obj as NoteViewModel).UpdateTime();
+            }
         }
     }
 }

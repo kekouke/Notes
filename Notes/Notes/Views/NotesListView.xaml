@@ -30,10 +30,10 @@
                                             <Label  Text = "{Binding Text}"
                                                     LineBreakMode = "TailTruncation"
                                                     MaxLines="5"
-                                                FontSize = "Medium"
-                                                TextColor = "Black">
+                                                    FontSize = "Medium"
+                                                    TextColor = "Black">
                                             </Label>
-                                            <Label Text="{Binding Date}" TextColor="Gray"/>
+                                            <Label Text="{Binding Date, StringFormat='{0:d/M/yyyy HH:mm}'}" TextColor="Gray"/>
                                         </StackLayout>
                                     </Frame>
                                 </local:GestureScrollView>
@@ -62,7 +62,7 @@
                                                     FontSize = "Medium"
                                                     TextColor = "Black">
                                             </Label>
-                                            <Label Text="{Binding Date}" TextColor="Gray"/>
+                                            <Label Text="{Binding Date, StringFormat='{0:d/M/yyyy HH:mm}'}" TextColor="Gray"/>
                                         </StackLayout >
                                     </Frame >
                                 </local:GestureScrollView>
