@@ -5,6 +5,6 @@ namespace Notes.Helper
 {
     interface ISaveable
     {
-        void Save(object obj, LinkedList<NoteViewModel> notes);
+        bool Save(object obj, LinkedList<NoteViewModel> notes);
     }
 }

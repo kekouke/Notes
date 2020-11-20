@@ -5,7 +5,7 @@ namespace Notes.Helper
 {
     public class EditOldNote : ISaveable
     {
-        public void Save(object obj, LinkedList<NoteViewModel> notes)
+        public bool Save(object obj, LinkedList<NoteViewModel> notes)
         {
             var new_note = obj as NoteViewModel;
             if (new_note.CompareDateTime())
@@ -17,7 +17,10 @@ namespace Notes.Helper
                     new_note.UpdateTime();
                 }
 
+                return true;
             }
+
+            return false;
         }
     }
 }

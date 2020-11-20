@@ -1,5 +1,7 @@
 ﻿using Notes.Helper;
 using Notes.Views;
+using Syncfusion.DataSource.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -39,7 +41,9 @@ namespace Notes.ViewModels
 
             LeftStack = new ObservableCollection<NoteViewModel>();
             RightStack = new ObservableCollection<NoteViewModel>();
-            Notes = new LinkedList<NoteViewModel>();
+
+            Notes = NoteSaver.Instance.ReadData() ?? new LinkedList<NoteViewModel>();
+            Restore();
         }
 
         public NoteViewModel SelectedNote
@@ -67,8 +71,12 @@ namespace Notes.ViewModels
 
         private void SaveNote(object obj)
         {
-            _saver.Save(obj, Notes);
-            Invalidate();
+            if (_saver.Save(obj, Notes))
+            {
+                Invalidate();
+                NoteSaver.Instance.SaveData(Notes);
+            }
+
             Back();
         }
 
@@ -80,6 +88,7 @@ namespace Notes.ViewModels
             {
                 Notes.Remove(Notes.Find(note));
                 Invalidate();
+                NoteSaver.Instance.SaveData(Notes);
             }
         }
 
@@ -108,6 +117,12 @@ namespace Notes.ViewModels
                     LHeight += note.Height + Spacing;
                 }
             }
+        }
+
+        private void Restore()
+        {
+            Notes.ForEach(n => n.ListViewModel = this);
+            Invalidate();
         }
 
         private void SetSaveStrategy(ISaveable saveStrategy) => _saver = saveStrategy;

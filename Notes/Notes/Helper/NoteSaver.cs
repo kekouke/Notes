@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Notes.ViewModels;
 
@@ -14,22 +14,30 @@ namespace Notes.Helper
 
         public static NoteSaver Instance { get => _instance.Value; }
 
-        private NoteSaver() { }
-
-        public object ReadData()
+        private NoteSaver()
         {
-            using (var file = new StreamReader(new FileStream("notes.txt", FileMode.OpenOrCreate)))
+            var documents = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            filename = Path.Combine(documents, "notes.json");
+        }
+
+        private string filename = String.Empty;
+
+        public LinkedList<NoteViewModel> ReadData()
+        {
+
+            using (var file = new StreamReader(new FileStream(filename, FileMode.OpenOrCreate)))
             {
-                return JsonConvert.DeserializeObject<object>(file.ReadToEnd()); 
+                return JsonConvert.DeserializeObject<LinkedList<NoteViewModel>>(file.ReadToEnd()); 
             }
 
         }
 
-        public void SaveData(LinkedList<NoteViewModel> notes)
-        {
-            using (var sw = new StreamWriter(new FileStream("notes.txt", FileMode.OpenOrCreate)))
+        public async void SaveData(LinkedList<NoteViewModel> notes)
+        {            
+            using (var sw = new StreamWriter(new FileStream(filename, FileMode.Create)))
             {
-                sw.Write(JsonConvert.SerializeObject(notes));
+                var t = await Task.Run(() => JsonConvert.SerializeObject(notes, Formatting.Indented));
+                sw.Write(t);
             }
         }
     }

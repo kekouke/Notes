@@ -21,22 +21,22 @@
                             <DataTemplate>
                                 <local:GestureScrollView SwipeLeft="GestureScrollView_SwipeLeft">
                                     <Frame Padding = "7"
-                                           Height = "{Binding Height, Mode=OneWayToSource}">
-                                        <Frame.GestureRecognizers>
+                                               Height = "{Binding Height, Mode=OneWayToSource}">
+                                            <Frame.GestureRecognizers>
                                             <TapGestureRecognizer   Command="{Binding ListViewModel.TapCommand}"
-                                                                    CommandParameter="{Binding}"/>
+                                                                        CommandParameter="{Binding}"/>
                                         </Frame.GestureRecognizers>
-                                        <StackLayout Padding = "10" BackgroundColor="#EEDEA6">
-                                            <Label  Text = "{Binding Text}"
-                                                    LineBreakMode = "TailTruncation"
-                                                    MaxLines="5"
-                                                    FontSize = "Medium"
-                                                    TextColor = "Black">
-                                            </Label>
-                                            <Label Text="{Binding Date, StringFormat='{0:d/M/yyyy HH:mm}'}" TextColor="Gray"/>
-                                        </StackLayout>
-                                    </Frame>
-                                </local:GestureScrollView>
+                                            <StackLayout Padding = "10" BackgroundColor="#EEDEA6">
+                                                <Label  Text = "{Binding Text}"
+                                                        LineBreakMode = "TailTruncation"
+                                                        MaxLines="5"
+                                                        FontSize = "Medium"
+                                                        TextColor = "Black">
+                                                </Label>
+                                                <Label Text="{Binding Date, StringFormat='{0:d/M/yyyy HH:mm}'}" TextColor="Gray"/>
+                                            </StackLayout>
+                                        </Frame>
+                                    </local:GestureScrollView>
                             </DataTemplate >
                         </local:BindableStackLayout.ItemTemplate >
                     </local:BindableStackLayout >

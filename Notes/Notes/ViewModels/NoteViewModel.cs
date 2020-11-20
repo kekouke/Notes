@@ -1,4 +1,5 @@
-﻿using Notes.Models;
+﻿using Newtonsoft.Json;
+using Notes.Models;
 using System;
 
 namespace Notes.ViewModels
@@ -54,6 +55,7 @@ namespace Notes.ViewModels
             }
         }
 
+        [JsonIgnore]
         public NotesListViewModel ListViewModel
         {
             get => lvm;

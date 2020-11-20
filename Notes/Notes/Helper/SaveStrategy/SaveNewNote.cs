@@ -8,13 +8,15 @@ namespace Notes.Helper
 {
     public class SaveNewNote : ISaveable
     {
-        public void Save(object obj, LinkedList<NoteViewModel> notes)
+        public bool Save(object obj, LinkedList<NoteViewModel> notes)
         {
             if ((obj as NoteViewModel).CheckCorrectData())
             {
                 notes.AddFirst(obj as NoteViewModel);
                 (obj as NoteViewModel).UpdateTime();
+                return true;
             }
+            return false;
         }
     }
 }
