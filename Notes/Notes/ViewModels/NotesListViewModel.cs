@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -28,17 +30,29 @@ namespace Notes.ViewModels
 
         private LinkedList<NoteViewModel> Notes { get; set; }
 
-        private NoteViewModel _selectedNote;
-
         private ISaveable _saver;
+
+        private bool _isButtonEnabled = true;
+        public bool IsButtonEnabled 
+        { 
+            get => _isButtonEnabled; 
+            set
+            {
+                if (_isButtonEnabled != value)
+                {
+                    _isButtonEnabled = value;
+                    OnPropertyChange();
+                }
+            }
+        }
 
         public NotesListViewModel()
         {
             AddNoteCommand = new Command(AddNote);
             SaveNoteCommand = new Command(SaveNote);
             DeleteNoteCommand = new Command(DeleteNote);
-            TapCommand = new Command((object obj) => { SelectedNote = obj as NoteViewModel; });
-
+            TapCommand = new Command(EditNote);
+            
             LeftStack = new ObservableCollection<NoteViewModel>();
             RightStack = new ObservableCollection<NoteViewModel>();
 
@@ -46,27 +60,22 @@ namespace Notes.ViewModels
             Restore();
         }
 
-        public NoteViewModel SelectedNote
-        {
-            get => _selectedNote;
-            set
-            {
-                if (_selectedNote != value)
-                {
-                    NoteViewModel temp;
-                    _selectedNote = null;
-                    OnPropertyChange();
-                    temp = value;
-                    SetSaveStrategy(new EditOldNote());
-                    Navigation.PushAsync(new NoteView(temp));
-                }
-            }
-        }
-
         private void AddNote()
         {
+            IsButtonEnabled = false;
             SetSaveStrategy(new SaveNewNote());
             Navigation.PushAsync(new NoteView(new NoteViewModel() { ListViewModel = this }));
+        }
+
+        private void EditNote(object note)
+        {
+            if (IsButtonEnabled)
+            {
+                IsButtonEnabled = false;
+                NoteViewModel temp = note as NoteViewModel;
+                SetSaveStrategy(new EditOldNote());
+                Navigation.PushAsync(new NoteView(temp));
+            }
         }
 
         private void SaveNote(object obj)
@@ -126,6 +135,10 @@ namespace Notes.ViewModels
         }
 
         private void SetSaveStrategy(ISaveable saveStrategy) => _saver = saveStrategy;
-        private void Back() => Navigation.PopAsync();
+        private void Back()
+        {
+            IsButtonEnabled = true;
+            Navigation.PopAsync();
+        }
     }
 }

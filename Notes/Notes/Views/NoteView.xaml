@@ -14,7 +14,7 @@
             </Frame>
 
             <Editor Text="{Binding Text}" 
-                HeightRequest="550"/>
+                HeightRequest="450"/>
             <Button Text="Save"
                     Command="{Binding ListViewModel.SaveNoteCommand}"
                     CommandParameter="{Binding}"/>
