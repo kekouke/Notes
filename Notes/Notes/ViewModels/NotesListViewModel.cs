@@ -1,12 +1,9 @@
 ﻿using Notes.Helper;
 using Notes.Views;
 using Syncfusion.DataSource.Extensions;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -48,10 +45,11 @@ namespace Notes.ViewModels
 
         public NotesListViewModel()
         {
-            AddNoteCommand = new Command(AddNote);
+            AddNoteCommand = new TapCommand(AddNote, this);
+            TapCommand = new TapCommand(EditNote, this);
+
             SaveNoteCommand = new Command(SaveNote);
             DeleteNoteCommand = new Command(DeleteNote);
-            TapCommand = new Command(EditNote);
             
             LeftStack = new ObservableCollection<NoteViewModel>();
             RightStack = new ObservableCollection<NoteViewModel>();
@@ -69,13 +67,10 @@ namespace Notes.ViewModels
 
         private void EditNote(object note)
         {
-            if (IsButtonEnabled)
-            {
-                IsButtonEnabled = false;
-                NoteViewModel temp = note as NoteViewModel;
-                SetSaveStrategy(new EditOldNote());
-                Navigation.PushAsync(new NoteView(temp));
-            }
+            IsButtonEnabled = false;
+            NoteViewModel temp = note as NoteViewModel;
+            SetSaveStrategy(new EditOldNote());
+            Navigation.PushAsync(new NoteView(temp));
         }
 
         private void SaveNote(object obj)

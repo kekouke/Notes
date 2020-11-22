@@ -79,8 +79,7 @@
                         HeightRequest="80"
                         CornerRadius="40"
                         HorizontalOptions="End"
-                        VerticalOptions="End"
-                        IsEnabled="{Binding IsButtonEnabled}"/>
+                        VerticalOptions="End"/>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

@@ -15,9 +15,6 @@
 
             <Editor Text="{Binding Text}" 
                 HeightRequest="450"/>
-            <Button Text="Save"
-                    Command="{Binding ListViewModel.SaveNoteCommand}"
-                    CommandParameter="{Binding}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

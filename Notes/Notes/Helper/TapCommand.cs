@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Notes.ViewModels;
+using System;
 using System.Windows.Input;
 
 namespace Notes.Helper
@@ -9,26 +8,33 @@ namespace Notes.Helper
     {
         public event EventHandler CanExecuteChanged;
 
-        private Action execute;
-        private bool interact = true;
+        private Action execute_with_no_param;
+        private Action<object> execute_with_param;
+        private NotesListViewModel ViewModel { get; set; }
 
-        public TapCommand(Action action)
+        private TapCommand(NotesListViewModel viewModel)
         {
-            execute = action;
+            ViewModel = viewModel;
         }
 
-        public bool CanExecute(object parameter)
+        public TapCommand(Action action, NotesListViewModel viewModel) : this(viewModel)
         {
-            return interact;
+            execute_with_no_param = action;
+
+        }
+        public TapCommand(Action<object> action, NotesListViewModel viewModel) : this(viewModel)
+        {
+            execute_with_param = action;
         }
 
-        public void Execute(object parameter)
+        public bool CanExecute(object parameter) => ViewModel.IsButtonEnabled;
+
+        public void Execute(object parameter = null)
         {
             if (CanExecute(parameter))
             {
-                interact = false;
-                execute.Invoke();
-                interact = true;
+                execute_with_no_param?.Invoke();
+                execute_with_param?.Invoke(parameter);
             }
         }
     }
