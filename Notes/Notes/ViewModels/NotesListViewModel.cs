@@ -1,6 +1,7 @@
 ﻿using Notes.Helper;
 using Notes.Views;
 using Syncfusion.DataSource.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace Notes.ViewModels
         public ICommand SaveNoteCommand { get; protected set; }
         public ICommand TapCommand { get; protected set; }
         public ICommand DeleteNoteCommand { get; protected set; }
+        public ICommand SearchNoteCommand { get; protected set; }
 
         public INavigation Navigation { get; set; }
 
@@ -50,12 +52,27 @@ namespace Notes.ViewModels
 
             SaveNoteCommand = new Command(SaveNote);
             DeleteNoteCommand = new Command(DeleteNote);
+            SearchNoteCommand = new Command(SearchNote);
             
             LeftStack = new ObservableCollection<NoteViewModel>();
             RightStack = new ObservableCollection<NoteViewModel>();
 
             Notes = NoteSaver.Instance.ReadData() ?? new LinkedList<NoteViewModel>();
             Restore();
+        }
+
+        private void SearchNote(object obj)
+        {
+            var text = obj as string;
+            if (text.Length >= 1)
+            {
+                var searchedNote = Notes.Where(n => n.Text.ToLower().Contains(text.ToLower()));
+                Invalidate(searchedNote);
+            }
+            else
+            {
+                Invalidate(Notes);
+            }
         }
 
         private void AddNote()
@@ -77,7 +94,7 @@ namespace Notes.ViewModels
         {
             if (_saver.Save(obj, Notes))
             {
-                Invalidate();
+                Invalidate(Notes);
                 NoteSaver.Instance.SaveData(Notes);
             }
 
@@ -91,24 +108,24 @@ namespace Notes.ViewModels
             if (await Application.Current.MainPage.DisplayAlert("Delete the note", "Do you wanna delete the note?", "Yes", "No"))
             {
                 Notes.Remove(Notes.Find(note));
-                Invalidate();
+                Invalidate(Notes);
                 NoteSaver.Instance.SaveData(Notes);
             }
         }
 
 
-        private void Invalidate()
+        private void Invalidate(IEnumerable<NoteViewModel> notes)
         {
             RHeight = 0;
             LHeight = 0;
             LeftStack.Clear();
             RightStack.Clear();
-            CorrectHeightColumn();
+            CorrectHeightColumn(notes);
         }
 
-        private void CorrectHeightColumn()
+        private void CorrectHeightColumn(IEnumerable<NoteViewModel> notes)
         {
-            foreach (var note in Notes.OrderByDescending(x => x.Date))
+            foreach (var note in notes.OrderByDescending(x => x.Date))
             {
                 if (LHeight > RHeight)
                 {
@@ -126,7 +143,7 @@ namespace Notes.ViewModels
         private void Restore()
         {
             Notes.ForEach(n => n.ListViewModel = this);
-            Invalidate();
+            Invalidate(Notes);
         }
 
         private void SetSaveStrategy(ISaveable saveStrategy) => _saver = saveStrategy;

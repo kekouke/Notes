@@ -2,30 +2,43 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:Notes.Visual"
+             xmlns:behavior="clr-namespace:Notes.Behaviors"
              x:Class="Notes.Views.NotesListView"
              Title="Notes">
     <ContentPage.Content>
-        <StackLayout>
-            <ScrollView Padding="10">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <local:BindableStackLayout  x:Name = "l_stack"
+        <Grid>
+            <StackLayout>
+                <StackLayout Padding="10">
+                    <SearchBar x:Name="SearchBar"
+                        HorizontalOptions="FillAndExpand"
+                        SearchCommand="{Binding SearchNoteCommand}"
+                        SearchCommandParameter="{Binding Text, Source={x:Reference SearchBar}}"
+                        Placeholder="Search">
+                        <SearchBar.Behaviors>
+                            <behavior:TextChangedBehavior />
+                        </SearchBar.Behaviors>
+                    </SearchBar>
+                </StackLayout>
+                <ScrollView Padding="10">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <local:BindableStackLayout  x:Name = "l_stack"
                                                 ItemsSource = "{Binding LeftStack}"
                                                 VerticalOptions="Start"
                                                 Grid.Column="0"
                                                 Height="{Binding LHeight, Mode=OneWayToSource}">
-                        <local:BindableStackLayout.ItemTemplate >
-                            <DataTemplate>
-                                <local:GestureScrollView SwipeLeft="GestureScrollView_SwipeLeft">
-                                    <Frame Padding = "7"
-                                               Height = "{Binding Height, Mode=OneWayToSource}">
+                            <local:BindableStackLayout.ItemTemplate >
+                                <DataTemplate>
+                                    <local:GestureScrollView SwipeLeft="GestureScrollView_SwipeLeft">
+                                        <Frame Padding = "7"
+                                           Height = "{Binding Height, Mode=OneWayToSource}">
                                             <Frame.GestureRecognizers>
-                                            <TapGestureRecognizer   Command="{Binding ListViewModel.TapCommand}"
+                                                <TapGestureRecognizer   Command="{Binding ListViewModel.TapCommand}"
                                                                         CommandParameter="{Binding}"/>
-                                        </Frame.GestureRecognizers>
+                                            </Frame.GestureRecognizers>
                                             <StackLayout Padding = "10" BackgroundColor="#EEDEA6">
                                                 <Label  Text = "{Binding Text}"
                                                         LineBreakMode = "TailTruncation"
@@ -37,50 +50,50 @@
                                             </StackLayout>
                                         </Frame>
                                     </local:GestureScrollView>
-                            </DataTemplate >
-                        </local:BindableStackLayout.ItemTemplate >
-                    </local:BindableStackLayout >
+                                </DataTemplate >
+                            </local:BindableStackLayout.ItemTemplate >
+                        </local:BindableStackLayout >
 
-                    <local:BindableStackLayout  x:Name = "r_stack"
+                        <local:BindableStackLayout  x:Name = "r_stack"
                                                 ItemsSource = "{Binding RightStack}"
                                                 VerticalOptions="Start"
                                                 Grid.Column="1"
                                                 Height="{Binding RHeight, Mode=OneWayToSource}">
-                        <local:BindableStackLayout.ItemTemplate>
-                            <DataTemplate>
-                                <local:GestureScrollView SwipeRight="GestureScrollView_SwipeRight">
-                                    <Frame Padding = "7"
+                            <local:BindableStackLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <local:GestureScrollView SwipeRight="GestureScrollView_SwipeRight">
+                                        <Frame Padding = "7"
                                            Height = "{Binding Height, Mode=OneWayToSource}">
-                                        <Frame.GestureRecognizers>
-                                            <TapGestureRecognizer   Command="{Binding ListViewModel.TapCommand}"
+                                            <Frame.GestureRecognizers>
+                                                <TapGestureRecognizer   Command="{Binding ListViewModel.TapCommand}"
                                                                 CommandParameter="{Binding}"/>
-                                        </Frame.GestureRecognizers>
-                                        <StackLayout Padding = "10"  BackgroundColor="#EEDEA6">
-                                            <Label  Text = "{Binding Text}"
+                                            </Frame.GestureRecognizers>
+                                            <StackLayout Padding = "10"  BackgroundColor="#EEDEA6">
+                                                <Label  Text = "{Binding Text}"
                                                     LineBreakMode ="TailTruncation"
                                                     MaxLines="5"
                                                     FontSize = "Medium"
                                                     TextColor = "Black">
-                                            </Label>
-                                            <Label Text="{Binding Date, StringFormat='{0:d/M/yyyy HH:mm}'}" TextColor="Gray"/>
-                                        </StackLayout >
-                                    </Frame >
-                                </local:GestureScrollView>
-                            </DataTemplate >
-                        </local:BindableStackLayout.ItemTemplate>
-                    </local:BindableStackLayout>
-                </Grid>
-            </ScrollView>
-            <StackLayout VerticalOptions="EndAndExpand"
-                         Margin="10">
-                <Button Text="+" 
+                                                </Label>
+                                                <Label Text="{Binding Date, StringFormat='{0:d/M/yyyy HH:mm}'}" TextColor="Gray"/>
+                                            </StackLayout >
+                                        </Frame >
+                                    </local:GestureScrollView>
+                                </DataTemplate >
+                            </local:BindableStackLayout.ItemTemplate>
+                        </local:BindableStackLayout>
+                    </Grid>
+                </ScrollView>
+            </StackLayout>
+            
+            <Button Text="+" 
                         WidthRequest="80"
                         Command="{Binding AddNoteCommand}"
                         HeightRequest="80"
                         CornerRadius="40"
                         HorizontalOptions="End"
-                        VerticalOptions="End"/>
-            </StackLayout>
-        </StackLayout>
+                        VerticalOptions="End"
+                        Margin="10"/>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>
