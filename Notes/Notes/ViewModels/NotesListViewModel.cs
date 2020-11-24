@@ -58,11 +58,13 @@ namespace Notes.ViewModels
             RightStack = new ObservableCollection<NoteViewModel>();
 
             Notes = NoteSaver.Instance.ReadData() ?? new LinkedList<NoteViewModel>();
-            Restore();
+            //Restore();
         }
 
         private void SearchNote(object obj)
         {
+            LeftStack.Clear();
+            RightStack.Clear();
             var text = obj as string;
             if (text.Length >= 1)
             {
@@ -125,22 +127,24 @@ namespace Notes.ViewModels
 
         private void CorrectHeightColumn(IEnumerable<NoteViewModel> notes)
         {
+            bool right = false;
             foreach (var note in notes.OrderByDescending(x => x.Date))
             {
-                if (LHeight > RHeight)
+               
+                if (right)
                 {
                     RightStack.Add(note);
-                    RHeight += note.Height + Spacing;
                 }
                 else
                 {
                     LeftStack.Add(note);
-                    LHeight += note.Height + Spacing;
                 }
+
+                right = !right;
             }
         }
 
-        private void Restore()
+        public void Restore()
         {
             Notes.ForEach(n => n.ListViewModel = this);
             Invalidate(Notes);

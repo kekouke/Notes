@@ -62,6 +62,16 @@ namespace Notes.Visual
             }
             
         }
+
+        public static readonly BindableProperty BindableHeightProperty =
+                    BindableProperty.Create(nameof(BindableHeight), typeof(double), typeof(BindableStackLayout), default(double));
+
+        public double BindableHeight
+        {
+            get { return (double)GetValue(BindableHeightProperty); }
+            set { SetValue(BindableHeightProperty, value); }
+        }
+
         private View CreateChildViewFor(object item)
         {
             this.ItemTemplate.SetValue(BindableObject.BindingContextProperty, item);

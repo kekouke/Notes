@@ -26,15 +26,15 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <local:BindableStackLayout  x:Name = "l_stack"
-                                                ItemsSource = "{Binding LeftStack}"
-                                                VerticalOptions="Start"
-                                                Grid.Column="0"
-                                                Height="{Binding LHeight, Mode=OneWayToSource}">
+                                                    ItemsSource = "{Binding LeftStack}"
+                                                    VerticalOptions="Start"
+                                                    Grid.Column="0"
+                                                    Spacing="{Binding Spacing}">
                             <local:BindableStackLayout.ItemTemplate >
                                 <DataTemplate>
                                     <local:GestureScrollView SwipeLeft="GestureScrollView_SwipeLeft">
-                                        <Frame Padding = "7"
-                                           Height = "{Binding Height, Mode=OneWayToSource}">
+                                        <Frame  Padding = "7"
+                                                Height = "{Binding Height, Mode=OneWayToSource}">
                                             <Frame.GestureRecognizers>
                                                 <TapGestureRecognizer   Command="{Binding ListViewModel.TapCommand}"
                                                                         CommandParameter="{Binding}"/>
@@ -42,7 +42,7 @@
                                             <StackLayout Padding = "10" BackgroundColor="#EEDEA6">
                                                 <Label  Text = "{Binding Text}"
                                                         LineBreakMode = "TailTruncation"
-                                                        MaxLines="5"
+                                                        MaxLines="1"
                                                         FontSize = "Medium"
                                                         TextColor = "Black">
                                                 </Label>
@@ -55,15 +55,15 @@
                         </local:BindableStackLayout >
 
                         <local:BindableStackLayout  x:Name = "r_stack"
-                                                ItemsSource = "{Binding RightStack}"
-                                                VerticalOptions="Start"
-                                                Grid.Column="1"
-                                                Height="{Binding RHeight, Mode=OneWayToSource}">
+                                                    ItemsSource = "{Binding RightStack}"
+                                                    VerticalOptions="Start"
+                                                    Grid.Column="1"
+                                                    Spacing="{Binding Spacing}">
                             <local:BindableStackLayout.ItemTemplate>
                                 <DataTemplate>
                                     <local:GestureScrollView SwipeRight="GestureScrollView_SwipeRight">
-                                        <Frame Padding = "7"
-                                           Height = "{Binding Height, Mode=OneWayToSource}">
+                                        <Frame  Padding = "7"
+                                                Height = "{Binding Height, Mode=OneWayToSource}">
                                             <Frame.GestureRecognizers>
                                                 <TapGestureRecognizer   Command="{Binding ListViewModel.TapCommand}"
                                                                 CommandParameter="{Binding}"/>
@@ -71,7 +71,7 @@
                                             <StackLayout Padding = "10"  BackgroundColor="#EEDEA6">
                                                 <Label  Text = "{Binding Text}"
                                                     LineBreakMode ="TailTruncation"
-                                                    MaxLines="5"
+                                                    MaxLines="1"
                                                     FontSize = "Medium"
                                                     TextColor = "Black">
                                                 </Label>
@@ -87,13 +87,13 @@
             </StackLayout>
             
             <Button Text="+" 
-                        WidthRequest="80"
                         Command="{Binding AddNoteCommand}"
-                        HeightRequest="80"
-                        CornerRadius="40"
+                        HeightRequest="70"
+                    WidthRequest="70"
+                        CornerRadius="35"
                         HorizontalOptions="End"
                         VerticalOptions="End"
-                        Margin="10"/>
+                        Margin="20"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

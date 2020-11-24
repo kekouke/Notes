@@ -12,8 +12,9 @@ namespace Notes.Views
         public NotesListView()
         {
             InitializeComponent();
-            ViewModel = new NotesListViewModel() { Navigation = this.Navigation, Spacing = l_stack.Spacing };
+            ViewModel = new NotesListViewModel() { Navigation = this.Navigation };
             BindingContext = ViewModel;
+            ViewModel.Restore();
         }
 
         private void GestureScrollView_SwipeLeft(object sender, System.EventArgs e)

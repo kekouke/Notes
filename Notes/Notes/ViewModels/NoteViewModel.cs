@@ -6,6 +6,7 @@ namespace Notes.ViewModels
 {
     public class NoteViewModel : BaseViewModel
     {
+        [JsonProperty]
         private Note _note;
         private NotesListViewModel lvm;
 
@@ -14,6 +15,7 @@ namespace Notes.ViewModels
             _note = new Note(DateTime.Now);
         }
 
+        [JsonIgnore]
         public string Text
         {
             get => _note.Text;
@@ -29,6 +31,7 @@ namespace Notes.ViewModels
             }
         }
 
+        [JsonIgnore]
         public DateTime Date
         {
             get => _note.LastChangeTime;
@@ -42,6 +45,7 @@ namespace Notes.ViewModels
             }
         }
 
+        [JsonIgnore]
         public int Lenght
         {
             get => _note.Lenght;
@@ -61,8 +65,6 @@ namespace Notes.ViewModels
             get => lvm;
             set => lvm = value;
         }
-
-        public double Height { get; set; }
 
         public bool CheckCorrectData() => Text != null && Text.Trim() != String.Empty;
 
