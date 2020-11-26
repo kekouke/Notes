@@ -27,6 +27,7 @@ namespace Notes.ViewModels
         public double Spacing { get; set; }
 
         private LinkedList<NoteViewModel> Notes { get; set; }
+        private IEnumerable<NoteViewModel> SearchedNotes { get; set; }
 
         private ISaveable _saver;
 
@@ -57,6 +58,7 @@ namespace Notes.ViewModels
             RightStack = new ObservableCollection<NoteViewModel>();
             
             Notes = NoteSaver.Instance.ReadData() ?? new LinkedList<NoteViewModel>();
+
             Restore();
         }
 
@@ -65,12 +67,13 @@ namespace Notes.ViewModels
             var text = obj as string;
             if (text.Length >= 1)
             {
-                var searchedNote = Notes.Where(n => n.Text.ToLower().Contains(text.ToLower()));
-                Invalidate(searchedNote);
+                SearchedNotes = Notes.Where(n => n.Text.ToLower().Contains(text.ToLower()));
+                Invalidate();
             }
             else
             {
-                Invalidate(Notes);
+                SearchedNotes = null;
+                Invalidate();
             }
         }
 
@@ -93,7 +96,7 @@ namespace Notes.ViewModels
         {
             if (_saver.Save(obj, Notes))
             {
-                Invalidate(Notes);
+                Invalidate();
                 NoteSaver.Instance.SaveData(Notes);
             }
 
@@ -107,19 +110,19 @@ namespace Notes.ViewModels
             if (await Application.Current.MainPage.DisplayAlert("Deleting note", "Do you want to delete the note?", "Yes", "No"))
             {
                 Notes.Remove(Notes.Find(note));
-                Invalidate(Notes);
+                Invalidate();
                 NoteSaver.Instance.SaveData(Notes);
             }
         }
 
 
-        private void Invalidate(IEnumerable<NoteViewModel> notes)
+        private void Invalidate()
         {
             RHeight = 0;
             LHeight = 0;
             LeftStack.Clear();
             RightStack.Clear();
-            CorrectHeightColumn(notes);
+            CorrectHeightColumn(SearchedNotes ?? Notes);
         }
 
         private void CorrectHeightColumn(IEnumerable<NoteViewModel> notes)
@@ -145,7 +148,7 @@ namespace Notes.ViewModels
         public void Restore()
         {
             Notes.ForEach(n => n.ListViewModel = this);
-            Invalidate(Notes);
+            Invalidate();
         }
 
         private void SetSaveStrategy(ISaveable saveStrategy) => _saver = saveStrategy;
