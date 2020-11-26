@@ -14,7 +14,7 @@ namespace Notes.Helper
                 if (new_note.CheckCorrectData())
                 {
                     notes.AddFirst(new_note);
-                    new_note.UpdateTime();
+                    new_note.Update();
                 }
 
                 return true;

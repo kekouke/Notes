@@ -1,7 +1,6 @@
 ﻿using Notes.Helper;
 using Notes.Views;
 using Syncfusion.DataSource.Extensions;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -23,9 +22,9 @@ namespace Notes.ViewModels
 
         public INavigation Navigation { get; set; }
 
-        public double LHeight { get; set; } = 0;
-        public double RHeight { get; set; } = 0;
-        public double Spacing { get; set; } = 0;
+        public double LHeight { get; set; }
+        public double RHeight { get; set; }
+        public double Spacing { get; set; }
 
         private LinkedList<NoteViewModel> Notes { get; set; }
 
@@ -56,15 +55,13 @@ namespace Notes.ViewModels
             
             LeftStack = new ObservableCollection<NoteViewModel>();
             RightStack = new ObservableCollection<NoteViewModel>();
-
+            
             Notes = NoteSaver.Instance.ReadData() ?? new LinkedList<NoteViewModel>();
-            //Restore();
+            Restore();
         }
 
         private void SearchNote(object obj)
         {
-            LeftStack.Clear();
-            RightStack.Clear();
             var text = obj as string;
             if (text.Length >= 1)
             {
@@ -107,7 +104,7 @@ namespace Notes.ViewModels
         {
             var note = obj as NoteViewModel;
 
-            if (await Application.Current.MainPage.DisplayAlert("Delete the note", "Do you wanna delete the note?", "Yes", "No"))
+            if (await Application.Current.MainPage.DisplayAlert("Deleting note", "Do you want to delete the note?", "Yes", "No"))
             {
                 Notes.Remove(Notes.Find(note));
                 Invalidate(Notes);
@@ -127,21 +124,22 @@ namespace Notes.ViewModels
 
         private void CorrectHeightColumn(IEnumerable<NoteViewModel> notes)
         {
-            bool right = false;
             foreach (var note in notes.OrderByDescending(x => x.Date))
             {
-               
-                if (right)
+
+                if (LHeight > RHeight)
                 {
                     RightStack.Add(note);
+                    RHeight += note.ActualHeight + Spacing;
                 }
                 else
                 {
                     LeftStack.Add(note);
+                    LHeight += note.ActualHeight + Spacing;
                 }
 
-                right = !right;
             }
+
         }
 
         public void Restore()

@@ -15,6 +15,27 @@
 
             <Editor Text="{Binding Text}" 
                 HeightRequest="450"/>
+            <Grid InputTransparent="True" Opacity="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <StackLayout Grid.Column="1" >
+                    <Frame  Padding = "7" 
+                            Height ="{Binding Height, Mode=OneWayToSource}">
+                        <StackLayout Padding = "10"
+                                             BackgroundColor="Red">
+                            <Label  Text = "{Binding Text}"
+                                            LineBreakMode = "TailTruncation"
+                                            MaxLines="5"
+                                            FontSize = "Medium">
+                            </Label>
+                            <Label Text="00.00.0000 04:10"/>
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+            </Grid>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

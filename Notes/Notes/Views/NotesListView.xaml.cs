@@ -7,14 +7,13 @@ namespace Notes.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class NotesListView : ContentPage
     {
-        public NotesListViewModel ViewModel { get; private set; }
+        public NotesListViewModel ViewModel { get;  set; }
 
         public NotesListView()
         {
             InitializeComponent();
-            ViewModel = new NotesListViewModel() { Navigation = this.Navigation };
+            ViewModel = new NotesListViewModel() { Navigation = this.Navigation, Spacing = l_stack.Spacing };
             BindingContext = ViewModel;
-            ViewModel.Restore();
         }
 
         private void GestureScrollView_SwipeLeft(object sender, System.EventArgs e)

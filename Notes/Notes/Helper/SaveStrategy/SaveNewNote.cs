@@ -13,7 +13,7 @@ namespace Notes.Helper
             if ((obj as NoteViewModel).CheckCorrectData())
             {
                 notes.AddFirst(obj as NoteViewModel);
-                (obj as NoteViewModel).UpdateTime();
+                (obj as NoteViewModel).Update();
                 return true;
             }
             return false;

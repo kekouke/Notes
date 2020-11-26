@@ -66,9 +66,18 @@ namespace Notes.ViewModels
             set => lvm = value;
         }
 
+        [JsonIgnore]
+        public double Height { get; set; }
+
+        public double ActualHeight { get; set; }
+
         public bool CheckCorrectData() => Text != null && Text.Trim() != String.Empty;
 
-        public void UpdateTime() => _note.OldChangeTime = _note.LastChangeTime;
+        public void Update()
+        {
+            ActualHeight = Height;
+            _note.OldChangeTime = _note.LastChangeTime;
+        }
 
         private void ChangeLastEditDate() => Date = DateTime.Now;
 

@@ -9,16 +9,17 @@
         <Grid>
             <StackLayout>
                 <StackLayout Padding="10">
-                    <SearchBar x:Name="SearchBar"
-                        HorizontalOptions="FillAndExpand"
-                        SearchCommand="{Binding SearchNoteCommand}"
-                        SearchCommandParameter="{Binding Text, Source={x:Reference SearchBar}}"
-                        Placeholder="Search">
+                    <SearchBar  x:Name="SearchBar"
+                                HorizontalOptions="FillAndExpand"
+                                SearchCommand="{Binding SearchNoteCommand}"
+                                SearchCommandParameter="{Binding Text, Source={x:Reference SearchBar}}"
+                                Placeholder="Search">
                         <SearchBar.Behaviors>
                             <behavior:TextChangedBehavior />
                         </SearchBar.Behaviors>
                     </SearchBar>
                 </StackLayout>
+
                 <ScrollView Padding="10">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -28,8 +29,7 @@
                         <local:BindableStackLayout  x:Name = "l_stack"
                                                     ItemsSource = "{Binding LeftStack}"
                                                     VerticalOptions="Start"
-                                                    Grid.Column="0"
-                                                    Spacing="{Binding Spacing}">
+                                                    Grid.Column="0">
                             <local:BindableStackLayout.ItemTemplate >
                                 <DataTemplate>
                                     <local:GestureScrollView SwipeLeft="GestureScrollView_SwipeLeft">
@@ -40,13 +40,15 @@
                                                                         CommandParameter="{Binding}"/>
                                             </Frame.GestureRecognizers>
                                             <StackLayout Padding = "10" BackgroundColor="#EEDEA6">
-                                                <Label  Text = "{Binding Text}"
+                                                <Label  
+                                                        Text = "{Binding Text}"
                                                         LineBreakMode = "TailTruncation"
-                                                        MaxLines="1"
+                                                        MaxLines="5"
                                                         FontSize = "Medium"
                                                         TextColor = "Black">
                                                 </Label>
-                                                <Label Text="{Binding Date, StringFormat='{0:d/M/yyyy HH:mm}'}" TextColor="Gray"/>
+                                                <Label Text="{Binding Date, StringFormat='{0:d/M/yyyy HH:mm}'}" 
+                                                       TextColor="Gray"/>
                                             </StackLayout>
                                         </Frame>
                                     </local:GestureScrollView>
@@ -57,8 +59,7 @@
                         <local:BindableStackLayout  x:Name = "r_stack"
                                                     ItemsSource = "{Binding RightStack}"
                                                     VerticalOptions="Start"
-                                                    Grid.Column="1"
-                                                    Spacing="{Binding Spacing}">
+                                                    Grid.Column="1">
                             <local:BindableStackLayout.ItemTemplate>
                                 <DataTemplate>
                                     <local:GestureScrollView SwipeRight="GestureScrollView_SwipeRight">
@@ -66,16 +67,17 @@
                                                 Height = "{Binding Height, Mode=OneWayToSource}">
                                             <Frame.GestureRecognizers>
                                                 <TapGestureRecognizer   Command="{Binding ListViewModel.TapCommand}"
-                                                                CommandParameter="{Binding}"/>
+                                                                        CommandParameter="{Binding}"/>
                                             </Frame.GestureRecognizers>
                                             <StackLayout Padding = "10"  BackgroundColor="#EEDEA6">
                                                 <Label  Text = "{Binding Text}"
-                                                    LineBreakMode ="TailTruncation"
-                                                    MaxLines="1"
-                                                    FontSize = "Medium"
-                                                    TextColor = "Black">
+                                                        LineBreakMode ="TailTruncation"
+                                                        MaxLines="5"
+                                                        FontSize = "Medium"
+                                                        TextColor = "Black">
                                                 </Label>
-                                                <Label Text="{Binding Date, StringFormat='{0:d/M/yyyy HH:mm}'}" TextColor="Gray"/>
+                                                <Label Text="{Binding Date, StringFormat='{0:d/M/yyyy HH:mm}'}"
+                                                       TextColor="Gray"/>
                                             </StackLayout >
                                         </Frame >
                                     </local:GestureScrollView>
@@ -87,13 +89,13 @@
             </StackLayout>
             
             <Button Text="+" 
-                        Command="{Binding AddNoteCommand}"
-                        HeightRequest="70"
+                    Command="{Binding AddNoteCommand}"
+                    HeightRequest="70"
                     WidthRequest="70"
-                        CornerRadius="35"
-                        HorizontalOptions="End"
-                        VerticalOptions="End"
-                        Margin="20"/>
+                    CornerRadius="35"
+                    HorizontalOptions="End"
+                    VerticalOptions="End"
+                    Margin="20"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>
