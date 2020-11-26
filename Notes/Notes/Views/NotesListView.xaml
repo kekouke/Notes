@@ -40,13 +40,14 @@
                                                                         CommandParameter="{Binding}"/>
                                             </Frame.GestureRecognizers>
                                             <StackLayout Padding = "10" BackgroundColor="#EEDEA6">
-                                                <Label  
+                                                <Label  FontFamily="Lobster"
                                                         Text = "{Binding Text}"
                                                         LineBreakMode = "TailTruncation"
                                                         MaxLines="5"
                                                         FontSize = "Medium"
                                                         TextColor = "Black">
                                                 </Label>
+
                                                 <Label Text="{Binding Date, StringFormat='{0:d/M/yyyy HH:mm}'}" 
                                                        TextColor="Gray"/>
                                             </StackLayout>
@@ -70,7 +71,8 @@
                                                                         CommandParameter="{Binding}"/>
                                             </Frame.GestureRecognizers>
                                             <StackLayout Padding = "10"  BackgroundColor="#EEDEA6">
-                                                <Label  Text = "{Binding Text}"
+                                                <Label  FontFamily="Lobster"
+                                                        Text = "{Binding Text}"
                                                         LineBreakMode ="TailTruncation"
                                                         MaxLines="5"
                                                         FontSize = "Medium"
