@@ -7,7 +7,15 @@
              Title="Notes">
     <ContentPage.Content>
         <Grid>
-            <StackLayout>
+            <StackLayout AnchorY="0">
+                <StackLayout.Background>
+                    <LinearGradientBrush StartPoint="1,0">
+                        <GradientStop Color="#23D5AB" Offset="0.05"/>
+                        <GradientStop Color="#23A605" Offset="0.3"/>
+                        <GradientStop Color="#E73C7E" Offset="0.7"/>
+                        <GradientStop Color="#EE7752" Offset="1.0"/>
+                    </LinearGradientBrush>
+                </StackLayout.Background>
                 <StackLayout Padding="10">
                     <SearchBar  x:Name="SearchBar"
                                 HorizontalOptions="FillAndExpand"
