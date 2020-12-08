@@ -47,8 +47,8 @@ namespace Notes.ViewModels
 
         public NotesListViewModel()
         {
-            AddNoteCommand = new TapCommand(AddNote, this);
-            TapCommand = new TapCommand(EditNote, this);
+            AddNoteCommand = new Command(AddNote, () => IsButtonEnabled);
+            TapCommand = new Command(EditNote, (_) => IsButtonEnabled);
 
             SaveNoteCommand = new Command(SaveNote);
             DeleteNoteCommand = new Command(DeleteNote);

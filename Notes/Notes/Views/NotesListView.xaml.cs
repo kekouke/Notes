@@ -25,7 +25,7 @@ namespace Notes.Views
         private void GestureScrollView_SwipeRight(object sender, System.EventArgs e)
         {
             var noteFrame = (sender as ScrollView);
-            ViewModel.DeleteNoteCommand.Execute(noteFrame.BindingContext);
+            ViewModel.DeleteNoteCommand.Execute(noteFrame?.BindingContext);
         }
     }
 }

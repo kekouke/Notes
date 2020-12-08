@@ -15,7 +15,7 @@
 
             <Editor Text="{Binding Text}" 
                     FontFamily="Lobster"
-                HeightRequest="450"/>
+                    HeightRequest="450"/>
             <Grid InputTransparent="True" Opacity="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
